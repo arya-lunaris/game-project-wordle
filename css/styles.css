@@ -1,0 +1,158 @@
+/* @font-face {
+    font-family: 'Helvetica Neue';
+    src: url('/fonts/helvetica-neue-5/HelveticaNeueRoman.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Helvetica Neue';
+    src: url('/fonts/helvetica-neue-5/HelveticaNeueBold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+} */
+
+* {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #121213;
+}
+
+/* body {
+    background-color:white;
+} */
+
+hr {
+    border: 0;
+    border-top: 0.5px solid rgba(208, 204, 198, 0.5); 
+    margin: 20px 0;
+    margin-top: -10px;
+    width: 100%;
+}
+
+#correctWordContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -10px;
+}
+
+.correctWord {
+    width: 75px;
+    height: 40px;
+    font-size: 13px; 
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 10%;
+    font-weight: bold;
+    text-align: center;
+    line-height: 40px;
+}
+
+#title {
+    text-align: center;
+    color: #D0CCC6;
+    letter-spacing: 4px;
+    margin-top: 7px;
+}
+
+/* #title {
+    text-align: center;
+    color: black;
+    letter-spacing: 4px;
+    margin-top: 7px;
+} */
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    width: 340px;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+.square {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #3A3A3C;
+    text-align: center;
+    line-height: 60px;
+    font-size: 24px;
+}
+
+/* .square {
+    width: 60px;
+    height: 60px;
+    border: 2px solid rgba(160, 170, 180, 0.5); 
+    text-align: center;
+    line-height: 60px;
+    font-size: 24px;
+} */
+
+#keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 60px;
+    align-items: center;
+}
+
+#keyboard button {
+    width: 45px;
+    height: 60px;
+    margin: 1px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #808384;
+    color: white;
+    border: none;
+    border-radius: 10%;
+    font-weight: bold;
+}
+
+/* #keyboard button {
+    width: 45px;
+    height: 60px;
+    margin: 1px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #D4D6DA;
+    color: black;
+    border: none;
+    border-radius: 10%;
+    font-weight: bold;
+} */
+
+#keyboard button#enter {
+    width: 75px;
+    font-size: 12px;
+    padding-top: 5px;
+}
+
+#keyboard button#backspace {
+    width: 75px;
+}
+
+.playAgain {
+    width: 100px !important;
+    height: 50px !important;
+    font-size: 15px !important;
+    margin-top: 30px !important;
+}
+
+.hideWord {
+    visibility: hidden;
+}
+
+.hideButton {
+    display: none;
+}
