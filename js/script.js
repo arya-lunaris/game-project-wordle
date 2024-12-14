@@ -31,10 +31,17 @@ function moveToNextSquare() {
 
 function goBackSquare() {
     if (currentSquare === 0) {
-        return;
+        squares[currentSquare].innerHTML = "";;
+    } else if (currentSquare === squares.length - 1) {
+        squares[currentSquare].innerHTML = "";
+        currentSquare--
+    } else if (squares[currentSquare].innerHTML !== "") {
+        squares[currentSquare].innerHTML = "";
+        currentSquare--
+    } else {
+        currentSquare--
+        squares[currentSquare].innerHTML = "";
     }
-    currentSquare--
-    squares[currentSquare].innerHTML = "";
 }
 
 function updateCurrentSquare(letter) {
@@ -46,13 +53,11 @@ function updateCurrentSquare(letter) {
     }
 }
 
-
 function clickButton(event) {
     const letter = event.target.getAttribute("data-letter");
     updateCurrentSquare(letter);
     moveToNextSquare();
 }
-
 
 keys.forEach(button => {
     button.addEventListener("click", clickButton)
