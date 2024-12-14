@@ -5,17 +5,14 @@ const playAgainButton = document.querySelector(".playAgain");
 const hideButton = document.querySelector(".hideButton");
 const squares = document.querySelectorAll(".square");
 const keys = document.querySelectorAll(".key");
-const backspaceKey = document.querySelector("#backspace")
+const backspaceKey = document.querySelector("#backspace");
 
 
 /*-------------------------------- Variables --------------------------------*/
+let currentSquare = 0;
 // let correctWord = "";
 // let gussedWord = "";
-let currentSquare = 0;
 // let currentLetter = "";
-
-
-
 
 
 /*-------------------------------- Functions --------------------------------*/
@@ -63,19 +60,24 @@ keys.forEach(button => {
     button.addEventListener("click", clickButton)
 })
 
-// function gameWon() {
+function gameWon() {
+    hideButton.classList.remove("hideButton");
+}
 
-// }
+function gameLost() {
+    hideWord.classList.remove("hideWord");
+    hideButton.classList.remove("hideButton");
+}
 
-// function resetGame() {
+function resetGame() {
+    hideButton.classList.add("hideButton");
+    hideWord.classList.add("hideWord");
+    squares.forEach((square) => {
+        square.innerHTML = "";
+    })
+    currentSquare = 0;
+}
 
-// }
-
-
-
-// function clearLetter() {
-
-// }
 
 // function submitWord() {
 
@@ -101,5 +103,7 @@ keys.forEach(button => {
 
 // }
 
+
 /*----------------------------- Event Listeners -----------------------------*/
 backspaceKey.addEventListener("click", goBackSquare);
+playAgainButton.addEventListener("click", resetGame);
