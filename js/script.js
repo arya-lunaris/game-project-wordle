@@ -23,6 +23,7 @@ const rows = [
 let currentSquare = 0;
 let currentRow = 0;
 let currentRowSquares = getCurrentRowSquares();
+
 /*-------------------------------- Functions --------------------------------*/
 
 function getCurrentSquare() {
@@ -136,8 +137,14 @@ function resetGame() {
         square.innerHTML = "";
     })
     currentSquare = 0;
+    resetCorrectWord();
 }
 
+function resetCorrectWord() {
+    const correctWordElement = document.querySelector(".correctWord");
+    const correctWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
+    correctWordElement.innerHTML = correctWord;
+}
 
 
 
@@ -159,6 +166,11 @@ function resetGame() {
 
 
 /*----------------------------- Event Listeners -----------------------------*/
+document.addEventListener("DOMContentLoaded", function() {
+    const correctWordElement = document.querySelector(".correctWord");
+    const correctWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
+    correctWordElement.innerHTML = correctWord;
+});
 keys.forEach(button => {
     button.addEventListener("click", clickLetterButton)
 })
