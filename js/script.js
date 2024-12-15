@@ -3,62 +3,97 @@ const correctWordElement = document.querySelector(".correctWord");
 const hideWord = document.querySelector(".hideWord");
 const playAgainButton = document.querySelector(".playAgain");
 const hideButton = document.querySelector(".hideButton");
+const notEnoughLtrs = document.querySelector(".notEnoughLetters")
 const squares = document.querySelectorAll(".square");
 const keys = document.querySelectorAll(".key");
 const backspaceKey = document.querySelector("#backspace");
+const enterKey = document.querySelector("#enter");
+const rows = [
+    document.querySelector("#row1"),
+    document.querySelector("#row2"),
+    document.querySelector("#row3"),
+    document.querySelector("#row4"),
+    document.querySelector("#row5"),
+    document.querySelector("#row6")
+];
 
 
 /*-------------------------------- Variables --------------------------------*/
 let currentSquare = 0;
-// let correctWord = "";
-// let gussedWord = "";
-// let currentLetter = "";
-
-
+let currentRow = 0;
+let currentRowSquares = getCurrentRowSquares()
 /*-------------------------------- Functions --------------------------------*/
+
 function getCurrentSquare() {
     return squares[currentSquare];
 }
 
+function getCurrentRowSquares() {
+    return rows[currentRow].querySelectorAll(".square");
+}
+
+function clickLetterButton(event) {
+    const letter = event.target.getAttribute("data-letter");
+    updateCurrentSquare(letter);
+}
+
+function updateCurrentSquare(letter) {
+    if (currentRowSquares[4].innerHTML !== "") {
+        return;
+    }
+    if (currentRowSquares[currentSquare].innerHTML !== "") {
+        moveToNextSquare();      
+    } 
+    if (currentRowSquares[currentSquare].innerHTML === "") {
+        currentRowSquares[currentSquare].innerHTML = letter;
+        currentRowSquares[currentSquare].style.color = "white";
+        currentRowSquares[currentSquare].style.fontWeight = "bold";
+        currentRowSquares[currentSquare].style.fontSize = "30px";
+
+        moveToNextSquare();
+    }
+}
+
 function moveToNextSquare() {
-    if (currentSquare < squares.length - 1) {
+    if (currentSquare < currentRowSquares.length - 1) {
         currentSquare++;
     }
 }
 
 function goBackSquare() {
     if (currentSquare === 0) {
-        squares[currentSquare].innerHTML = "";;
-    } else if (currentSquare === squares.length - 1) {
-        squares[currentSquare].innerHTML = "";
-        currentSquare--
-    } else if (squares[currentSquare].innerHTML !== "") {
-        squares[currentSquare].innerHTML = "";
+        currentRowSquares[currentSquare].innerHTML = "";
+    } else if (currentRowSquares[currentSquare].innerHTML !== "") {
+        currentRowSquares[currentSquare].innerHTML = "";
         currentSquare--
     } else {
-        currentSquare--
-        squares[currentSquare].innerHTML = "";
+        currentSquare--;
+        currentRowSquares[currentSquare].innerHTML = "";
     }
 }
 
-function updateCurrentSquare(letter) {
-    if (currentSquare < squares.length) {
-        squares[currentSquare].innerHTML = letter;
-        squares[currentSquare].style.color = "white";
-        squares[currentSquare].style.fontWeight = "bold";
-        squares[currentSquare].style.fontSize = "30px";
+function submitWord() {
+    if (currentRow < rows.length - 1 && currentRowSquares[4].innerHTML !== "") {
+        currentRow++
+        currentSquare = 0;
+        currentRowSquares = getCurrentRowSquares()
+    } else {
+        notEnoughLetters()
     }
 }
 
-function clickButton(event) {
-    const letter = event.target.getAttribute("data-letter");
-    updateCurrentSquare(letter);
-    moveToNextSquare();
+function notEnoughLetters() {
+    notEnoughLtrs.classList.remove("hideShortWordAlert");
+    setTimeout(function () {
+        notEnoughLtrs.classList.add("hideShortWordAlert");
+    }, 3000);
 }
 
-keys.forEach(button => {
-    button.addEventListener("click", clickButton)
-})
+function invalidWord() {
+
+}
+
+
 
 function gameWon() {
     hideButton.classList.remove("hideButton");
@@ -79,9 +114,7 @@ function resetGame() {
 }
 
 
-// function submitWord() {
 
-// }
 
 // function compareArrays() {
 
@@ -105,5 +138,9 @@ function resetGame() {
 
 
 /*----------------------------- Event Listeners -----------------------------*/
+keys.forEach(button => {
+    button.addEventListener("click", clickLetterButton)
+})
 backspaceKey.addEventListener("click", goBackSquare);
+enterKey.addEventListener("click", submitWord);
 playAgainButton.addEventListener("click", resetGame);

@@ -16,7 +16,8 @@
     font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
 }
@@ -31,23 +32,30 @@ body {
 
 hr {
     border: 0;
-    border-top: 0.5px solid rgba(208, 204, 198, 0.5); 
+    border-top: 0.5px solid rgba(208, 204, 198, 0.5);
     margin: 20px 0;
     margin-top: -10px;
     width: 100%;
 }
 
-#correctWordContainer {
+#hiddenMessages {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -10px;
+    position: relative;
+    height: 40px;
 }
 
-.correctWord {
+.correctWord,
+.notEnoughLetters,
+.notAWord {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 75px;
     height: 40px;
-    font-size: 13px; 
+    font-size: 13px;
     background-color: white;
     color: black;
     border: none;
@@ -55,6 +63,23 @@ hr {
     font-weight: bold;
     text-align: center;
     line-height: 40px;
+}
+
+.notEnoughLetters {
+    width: 150px;
+    border-radius: 5%;
+}
+
+.notAWord {
+    width: 120px;
+    border-radius: 5%;
+}
+
+.correctWord,
+.notEnoughLetters,
+.notAWord {
+    display: block;
+    text-align: center;
 }
 
 #title {
@@ -73,11 +98,22 @@ hr {
 
 #grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: column;
     gap: 5px;
     width: 340px;
     margin: 0 auto;
     margin-top: 15px;
+}
+
+#row1,
+#row2,
+#row3,
+#row4,
+#row5,
+#row6 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
 }
 
 .square {
@@ -150,7 +186,9 @@ hr {
     border-radius: 10% !important;
 }
 
-.hideWord {
+.hideWord,
+.hideShortWordAlert,
+.hideNotAWordAlert {
     visibility: hidden;
 }
 
