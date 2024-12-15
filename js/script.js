@@ -3,7 +3,8 @@ const correctWordElement = document.querySelector(".correctWord");
 const hideWord = document.querySelector(".hideWord");
 const playAgainButton = document.querySelector(".playAgain");
 const hideButton = document.querySelector(".hideButton");
-const notEnoughLtrs = document.querySelector(".notEnoughLetters")
+const notEnoughLtrs = document.querySelector(".notEnoughLetters");
+const notAWord = document.querySelector(".notAWord")
 const squares = document.querySelectorAll(".square");
 const keys = document.querySelectorAll(".key");
 const backspaceKey = document.querySelector("#backspace");
@@ -21,7 +22,7 @@ const rows = [
 /*-------------------------------- Variables --------------------------------*/
 let currentSquare = 0;
 let currentRow = 0;
-let currentRowSquares = getCurrentRowSquares()
+let currentRowSquares = getCurrentRowSquares();
 /*-------------------------------- Functions --------------------------------*/
 
 function getCurrentSquare() {
@@ -42,8 +43,8 @@ function updateCurrentSquare(letter) {
         return;
     }
     if (currentRowSquares[currentSquare].innerHTML !== "") {
-        moveToNextSquare();      
-    } 
+        moveToNextSquare();
+    }
     if (currentRowSquares[currentSquare].innerHTML === "") {
         currentRowSquares[currentSquare].innerHTML = letter;
         currentRowSquares[currentSquare].style.color = "white";
@@ -73,13 +74,42 @@ function goBackSquare() {
 }
 
 function submitWord() {
-    if (currentRow < rows.length - 1 && currentRowSquares[4].innerHTML !== "") {
-        currentRow++
-        currentSquare = 0;
-        currentRowSquares = getCurrentRowSquares()
-    } else {
-        notEnoughLetters()
+    if (currentRow < rows.length && currentRowSquares[4].innerHTML !== "") {
+        const lettersArray = [];
+        const currentLetters = getCurrentRowLetters(lettersArray);
+        const checkWord = currentLetters.join("");
+
+        if (checkIfValidWord(checkWord)) {
+            console.log("Word is valid");
+            currentRow++;
+            currentSquare = 0;
+            currentRowSquares = getCurrentRowSquares()
+        } else {
+            console.log("Word is not valid");
+            invalidWord();
+        }
+    } else if (Array.from(currentRowSquares).some(square => square.innerHTML === "")) {
+        notEnoughLetters();
     }
+}
+
+function checkIfValidWord(checkWord) {
+    const lowerCaseWord = checkWord.toLowerCase();
+    return wordList.includes(lowerCaseWord);
+}
+
+function getCurrentRowLetters(lettersArray) {
+    currentRowSquares.forEach(square => {
+        lettersArray.push(square.innerHTML);
+    });
+    return lettersArray;
+}
+
+function invalidWord() {
+    notAWord.classList.remove("hideNotAWordAlert");
+    setTimeout(function () {
+        notAWord.classList.add("hideNotAWordAlert");
+    }, 3000);
 }
 
 function notEnoughLetters() {
@@ -88,11 +118,6 @@ function notEnoughLetters() {
         notEnoughLtrs.classList.add("hideShortWordAlert");
     }, 3000);
 }
-
-function invalidWord() {
-
-}
-
 
 
 function gameWon() {
@@ -117,10 +142,6 @@ function resetGame() {
 
 
 // function compareArrays() {
-
-// }
-
-// function checkIfValid() {
 
 // }
 

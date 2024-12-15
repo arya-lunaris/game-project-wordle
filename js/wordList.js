@@ -25,7 +25,7 @@ const wordList = [
     "champ", "chant", "chaos", "chaps", "charm", "chart", "chary", "chase", "chasm", "chats", "cheap", "cheat", "check", "cheek", "cheer", "chefs", "chess", "chest", "chick", "chide",
     "chief", "child", "chill", "chime", "china", "chink", "chins", "chips", "chirp", "choir", "choke", "chops", "chord", "chose", "chuck", "chump", "chums", "chunk", "churl", "churn",
     "chute", "cider", "cigar", "cinch", "circa", "cited", "cites", "civet", "civic", "civil", "clack", "claim", "clamp", "clams", "clang", "clank", "clans", "claps", "clash", "clasp",
-    "class", "claws", "clean", "clear", "clefs", "cleft", "clerk", "clews", "click", "cliff", "climb", "clime", "cling", "clink", "clips", "clips", "cloak", "clock", "clods", "clogs",
+    "class", "claws", "clean", "clear", "clefs", "cleft", "clerk", "clews", "click", "cliff", "climb", "clime", "cling", "clink", "clips", "cloak", "clock", "clods", "clogs",
     "clomp", "clone", "close", "cloth", "clots", "cloud", "clout", "clove", "clown", "clubs", "cluck", "clued", "clues", "clump", "clung", "coach", "coals", "coast", "coats", "cobra",
     "cocks", "cocoa", "codas", "coded", "coder", "codes", "coeds", "coils", "coins", "coked", "cokes", "colas", "colds", "colic", "colon", "color", "comas", "combo", "combs", "comes",
     "comet", "comfy", "comic", "comma", "conch", "condo", "cones", "conic", "cooks", "cools", "coons", "coops", "coped", "copes", "coral", "cords", "cored", "corer", "cores", "corks",
