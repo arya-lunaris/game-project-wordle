@@ -23,6 +23,7 @@ const rows = [
 let currentSquare = 0;
 let currentRow = 0;
 let currentRowSquares = getCurrentRowSquares();
+let correctWord = "";
 
 /*-------------------------------- Functions --------------------------------*/
 
@@ -76,17 +77,20 @@ function goBackSquare() {
 
 function submitWord() {
     if (currentRow < rows.length && currentRowSquares[4].innerHTML !== "") {
-        const lettersArray = [];
-        const currentLetters = getCurrentRowLetters(lettersArray);
-        const checkWord = currentLetters.join("");
-
+        const checkWord = getCurrentRowLetters().join("");
+        
         if (checkIfValidWord(checkWord)) {
-            console.log("Word is valid");
-            currentRow++;
-            currentSquare = 0;
-            currentRowSquares = getCurrentRowSquares()
+            const resultArray = compareArrays();
+            updateGridColor(resultArray);
+
+            if (resultArray.every(color => color === "green")) {
+                gameWon();
+            } else {
+                currentRow++;
+                currentSquare = 0;
+                currentRowSquares = getCurrentRowSquares();
+            }
         } else {
-            console.log("Word is not valid");
             invalidWord();
         }
     } else if (Array.from(currentRowSquares).some(square => square.innerHTML === "")) {
@@ -94,16 +98,44 @@ function submitWord() {
     }
 }
 
-function checkIfValidWord(checkWord) {
-    const lowerCaseWord = checkWord.toLowerCase();
-    return wordList.includes(lowerCaseWord);
+function compareArrays() {
+    const correctWordArray = correctWord.split("");
+    const guessedWordArray = getCurrentRowLetters();
+
+    return guessedWordArray.map((letter, index) => {
+        if (letter === correctWordArray[index]) {
+            return "green";
+        } else if (correctWordArray.includes(letter)) {
+            return "yellow";
+        } else {
+            return "grey";
+        }
+    });
 }
 
-function getCurrentRowLetters(lettersArray) {
+function getCurrentRowLetters() {
+    const lettersArray = [];
     currentRowSquares.forEach(square => {
         lettersArray.push(square.innerHTML);
     });
     return lettersArray;
+}
+
+function updateGridColor(resultArray) {
+    currentRowSquares.forEach((square, index) => {
+        if (resultArray[index] === "green") {
+            square.style.backgroundColor = "#548D4E";
+        } else if (resultArray[index] === "yellow") {
+            square.style.backgroundColor = "#B59F3A";
+        } else {
+            square.style.backgroundColor = "#3A3A3C";
+        }
+    })
+}
+
+function checkIfValidWord(checkWord) {
+    const lowerCaseWord = checkWord.toLowerCase();
+    return wordList.includes(lowerCaseWord);
 }
 
 function invalidWord() {
@@ -120,7 +152,6 @@ function notEnoughLetters() {
     }, 3000);
 }
 
-
 function gameWon() {
     hideButton.classList.remove("hideButton");
 }
@@ -135,26 +166,24 @@ function resetGame() {
     hideWord.classList.add("hideWord");
     squares.forEach((square) => {
         square.innerHTML = "";
+        square.style.backgroundColor = "#121213"
     })
     currentSquare = 0;
+    currentRow = 0;
+    currentRowSquares = getCurrentRowSquares();
     resetCorrectWord();
 }
 
 function resetCorrectWord() {
-    const correctWordElement = document.querySelector(".correctWord");
-    const correctWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
+    correctWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
     correctWordElement.innerHTML = correctWord;
 }
 
 
 
-// function compareArrays() {
 
-// }
 
-// function squareColor() {
 
-// }
 
 // function keyboardColor() {
 
@@ -166,14 +195,17 @@ function resetCorrectWord() {
 
 
 /*----------------------------- Event Listeners -----------------------------*/
-document.addEventListener("DOMContentLoaded", function() {
-    const correctWordElement = document.querySelector(".correctWord");
-    const correctWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
+document.addEventListener("DOMContentLoaded", function () {
+    correctWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
     correctWordElement.innerHTML = correctWord;
 });
+
 keys.forEach(button => {
     button.addEventListener("click", clickLetterButton)
 })
+
 backspaceKey.addEventListener("click", goBackSquare);
+
 enterKey.addEventListener("click", submitWord);
+
 playAgainButton.addEventListener("click", resetGame);
