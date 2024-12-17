@@ -85,7 +85,9 @@ function submitWord() {
             updateGridColor(resultArray);
             updateKeyboardColor(resultArray);
 
-            if (resultArray.every(color => color === "green")) {
+            if (currentRow === rows.length - 1 && resultArray.every(color => color !== "green")) {
+                gameLost(); 
+            } else if (resultArray.every(color => color === "green")) {
                 gameWon();
             } else {
                 currentRow++;
@@ -173,11 +175,13 @@ function notEnoughLetters() {
 }
 
 function gameWon() {
+    console.log("game won")
     winnerMessage.classList.remove("hideWinnerAlert");
     hideButton.classList.remove("hideButton");
 }
 
 function gameLost() {
+    console.log("game lost")
     hideWord.classList.remove("hideWord");
     hideButton.classList.remove("hideButton");
 }
