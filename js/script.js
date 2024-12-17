@@ -85,10 +85,10 @@ function submitWord() {
             updateGridColor(resultArray);
             updateKeyboardColor(resultArray);
 
-            if (currentRow === rows.length - 1 && resultArray.every(color => color !== "green")) {
-                gameLost(); 
-            } else if (resultArray.every(color => color === "green")) {
-                gameWon();
+            if (resultArray.every(color => color === "green")) {
+                gameWon(); 
+            } else if (currentRow === rows.length - 1)  {
+                gameLost();
             } else {
                 currentRow++;
                 currentSquare = 0;
@@ -175,13 +175,11 @@ function notEnoughLetters() {
 }
 
 function gameWon() {
-    console.log("game won")
     winnerMessage.classList.remove("hideWinnerAlert");
     hideButton.classList.remove("hideButton");
 }
 
 function gameLost() {
-    console.log("game lost")
     hideWord.classList.remove("hideWord");
     hideButton.classList.remove("hideButton");
 }
