@@ -4,6 +4,7 @@ const hideWord = document.querySelector(".hideWord");
 const playAgainButton = document.querySelector(".playAgain");
 const hideButton = document.querySelector(".hideButton");
 const notEnoughLtrs = document.querySelector(".notEnoughLetters");
+const winnerMessage = document.querySelector(".winnerAlert")
 const notAWord = document.querySelector(".notAWord")
 const squares = document.querySelectorAll(".square");
 const keys = document.querySelectorAll(".key");
@@ -20,8 +21,8 @@ const rows = [
 
 
 /*-------------------------------- Variables --------------------------------*/
-let currentSquare = 0;
 let currentRow = 0;
+let currentSquare = 0;
 let currentRowSquares = getCurrentRowSquares();
 let correctWord = "";
 
@@ -77,11 +78,12 @@ function goBackSquare() {
 
 function submitWord() {
     if (currentRow < rows.length && currentRowSquares[4].innerHTML !== "") {
+
         const checkWord = getCurrentRowLetters().join("");
-        
         if (checkIfValidWord(checkWord)) {
             const resultArray = compareArrays();
             updateGridColor(resultArray);
+            updateKeyboardColor(resultArray);
 
             if (resultArray.every(color => color === "green")) {
                 gameWon();
@@ -90,6 +92,7 @@ function submitWord() {
                 currentSquare = 0;
                 currentRowSquares = getCurrentRowSquares();
             }
+
         } else {
             invalidWord();
         }
@@ -98,9 +101,17 @@ function submitWord() {
     }
 }
 
+function getCurrentRowLetters() {
+    const lettersArray = [];
+    currentRowSquares.forEach(square => {
+        lettersArray.push(square.innerHTML);
+    });
+    return lettersArray;
+}
+
 function compareArrays() {
-    const correctWordArray = correctWord.split("");
     const guessedWordArray = getCurrentRowLetters();
+    const correctWordArray = correctWord.split("");
 
     return guessedWordArray.map((letter, index) => {
         if (letter === correctWordArray[index]) {
@@ -113,14 +124,6 @@ function compareArrays() {
     });
 }
 
-function getCurrentRowLetters() {
-    const lettersArray = [];
-    currentRowSquares.forEach(square => {
-        lettersArray.push(square.innerHTML);
-    });
-    return lettersArray;
-}
-
 function updateGridColor(resultArray) {
     currentRowSquares.forEach((square, index) => {
         if (resultArray[index] === "green") {
@@ -129,6 +132,23 @@ function updateGridColor(resultArray) {
             square.style.backgroundColor = "#B59F3A";
         } else {
             square.style.backgroundColor = "#3A3A3C";
+        }
+    })
+}
+
+function updateKeyboardColor(resultArray) {
+    const currentLettersArray = getCurrentRowLetters();
+    const keysArray = Array.from(keys);
+
+    currentLettersArray.forEach((letter, index) => {
+        const matchingKey = keysArray.find(key => key.getAttribute("data-letter") === letter);
+
+        if (resultArray[index] === "green") {
+            matchingKey.style.backgroundColor = "#548D4E";
+        } else if (resultArray[index] === "yellow") {
+            matchingKey.style.backgroundColor = "#B59F3A";
+        } else if (resultArray[index] === "grey") {
+            matchingKey.style.backgroundColor = "#3A3A3C";
         }
     })
 }
@@ -153,6 +173,7 @@ function notEnoughLetters() {
 }
 
 function gameWon() {
+    winnerMessage.classList.remove("hideWinnerAlert");
     hideButton.classList.remove("hideButton");
 }
 
@@ -164,12 +185,19 @@ function gameLost() {
 function resetGame() {
     hideButton.classList.add("hideButton");
     hideWord.classList.add("hideWord");
+    winnerMessage.classList.add("hideWinnerAlert");
+
     squares.forEach((square) => {
         square.innerHTML = "";
         square.style.backgroundColor = "#121213"
     })
-    currentSquare = 0;
+
+    keys.forEach((key) => {
+        key.style.backgroundColor = "#808384"
+    })
+
     currentRow = 0;
+    currentSquare = 0;
     currentRowSquares = getCurrentRowSquares();
     resetCorrectWord();
 }
@@ -185,9 +213,6 @@ function resetCorrectWord() {
 
 
 
-// function keyboardColor() {
-
-// }
 
 // function flipSquares() {
 
