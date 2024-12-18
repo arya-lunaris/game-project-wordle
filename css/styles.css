@@ -54,12 +54,12 @@ hr {
 
 .notEnoughLetters {
     width: 150px;
-    border-radius: 5%;
+    border-radius: 2%;
 }
 
 .notAWord {
     width: 120px;
-    border-radius: 5%;
+    border-radius: 2%;
 }
 
 .correctWord,
@@ -76,13 +76,6 @@ hr {
     letter-spacing: 4px;
     margin-top: 7px;
 }
-
-/* #title {
-    text-align: center;
-    color: black;
-    letter-spacing: 4px;
-    margin-top: 7px;
-} */
 
 #grid {
     display: grid;
@@ -113,15 +106,6 @@ hr {
     font-size: 24px;
 }
 
-/* .square {
-    width: 60px;
-    height: 60px;
-    border: 2px solid rgba(160, 170, 180, 0.5); 
-    text-align: center;
-    line-height: 60px;
-    font-size: 24px;
-} */
-
 #keyboard {
     display: flex;
     flex-direction: column;
@@ -142,19 +126,6 @@ hr {
     border-radius: 10%;
     font-weight: bold;
 }
-
-/* #keyboard button {
-    width: 45px;
-    height: 60px;
-    margin: 1px;
-    font-size: 20px;
-    cursor: pointer;
-    background-color: #D4D6DA;
-    color: black;
-    border: none;
-    border-radius: 10%;
-    font-weight: bold;
-} */
 
 #keyboard button#enter {
     width: 75px;
@@ -185,3 +156,12 @@ hr {
     display: none;
 }
 
+@keyframes flip {
+    100% {
+        transform: rotateX(180deg);
+    }
+}
+
+.flip {
+    animation: flip 1s ease-in-out forwards;
+}

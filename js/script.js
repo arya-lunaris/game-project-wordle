@@ -149,6 +149,12 @@ function notEnoughLetters() {
 
 function updateGridColor(resultArray) {
     currentRowSquares.forEach((square, index) => {
+        
+        square.classList.add("flip");
+        square.addEventListener("animationend", () => {
+            square.classList.remove("flip");
+        });
+
         if (resultArray[index] === "green") {
             square.style.backgroundColor = "#548D4E";
         } else if (resultArray[index] === "yellow") {
@@ -156,7 +162,7 @@ function updateGridColor(resultArray) {
         } else {
             square.style.backgroundColor = "#3A3A3C";
         }
-    })
+    });
 }
 
 function updateKeyboardColor(resultArray) {
