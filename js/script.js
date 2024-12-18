@@ -117,8 +117,11 @@ function compareArrays() {
 
     return guessedWordArray.map((letter, index) => {
         if (letter === correctWordArray[index]) {
+            correctWordArray[index] = null;
             return "green";
         } else if (correctWordArray.includes(letter)) {
+            const letterIndex = correctWordArray.indexOf(letter);
+            correctWordArray[letterIndex] = null;
             return "yellow";
         } else {
             return "grey";
