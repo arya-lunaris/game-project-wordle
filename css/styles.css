@@ -46,30 +46,25 @@ hr {
     border-radius: 5px;
     padding: 5px 8px;
     word-wrap: break-word;
-    overflow: hidden;
+    overflow: hidden; 
+    display: block;
+    text-align: center;
 }
 
 .notEnoughLetters {
     width: 120px;
-    height: 30px;
 }
 
 .notAWord {
     width: 100px;
-    height: 30px;
 }
 
 .winnerAlert {
-    width: 90px !important;
-    height: 30px;
+    width: 65px;
 }
 
-.correctWord,
-.notEnoughLetters,
-.notAWord
-.winnerAlert {
-    display: block;
-    text-align: center;
+.correctWord {
+    width: 50px;
 }
 
 #title {
