@@ -12,10 +12,6 @@ body {
     background-color: #121213;
 }
 
-/* body {
-    background-color:white;
-} */
-
 hr {
     border: 0;
     border-top: 0.5px solid rgba(208, 204, 198, 0.5);
@@ -40,26 +36,32 @@ hr {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 75px;
-    height: 40px;
     font-size: 13px;
     background-color: white;
     color: black;
     border: none;
-    border-radius: 10%;
     font-weight: bold;
     text-align: center;
-    line-height: 40px;
+    line-height: 30px;
+    border-radius: 5px;
+    padding: 5px 8px;
+    word-wrap: break-word;
+    overflow: hidden;
 }
 
 .notEnoughLetters {
-    width: 150px;
-    border-radius: 2%;
+    width: 120px;
+    height: 30px;
 }
 
 .notAWord {
-    width: 120px;
-    border-radius: 2%;
+    width: 100px;
+    height: 30px;
+}
+
+.winnerAlert {
+    width: 90px !important;
+    height: 30px;
 }
 
 .correctWord,
@@ -140,12 +142,12 @@ hr {
 .playAgain {
     width: 100px !important;
     height: 40px !important;
-    font-size: 15px !important;
-    margin-top: 30px !important;
-    border-radius: 10% !important;
+    font-size: 13px !important;
+    margin-top: 15px !important;
+    border-radius: 7px !important;
 }
 
-.hideWord,
+.hideWor,
 .hideShortWordAlert,
 .hideNotAWordAlert,
 .hideWinnerAlert {

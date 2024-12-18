@@ -10,7 +10,6 @@ const squares = document.querySelectorAll(".square");
 const keys = document.querySelectorAll(".key");
 const backspaceKey = document.querySelector("#backspace");
 const enterKey = document.querySelector("#enter");
-const letterColors = {};
 const rows = [
     document.querySelector("#row1"),
     document.querySelector("#row2"),
@@ -25,7 +24,7 @@ let currentRow = 0;
 let currentSquare = 0;
 let currentRowSquares = getCurrentRowSquares();
 let correctWord = "";
-
+let letterColors = {};
 /*-------------------------------- Functions --------------------------------*/
 function getCurrentSquare() {
     return squares[currentSquare];
@@ -149,7 +148,7 @@ function notEnoughLetters() {
 
 function updateGridColor(resultArray) {
     currentRowSquares.forEach((square, index) => {
-        
+
         square.classList.add("flip");
         square.addEventListener("animationend", () => {
             square.classList.remove("flip");
@@ -167,7 +166,7 @@ function updateGridColor(resultArray) {
 
 function updateKeyboardColor(resultArray) {
     const currentLettersArray = getCurrentRowLetters();
-    
+
     currentLettersArray.forEach((letter, index) => {
         if (resultArray[index] === "green") {
             letterColors[letter] = "green";
@@ -216,11 +215,12 @@ function resetGame() {
     keys.forEach((key) => {
         key.style.backgroundColor = "#808384"
     })
-
+    
     currentRow = 0;
     currentSquare = 0;
     currentRowSquares = getCurrentRowSquares();
     resetCorrectWord();
+    letterColors = {};
 }
 
 function resetCorrectWord() {
