@@ -10,6 +10,7 @@ const squares = document.querySelectorAll(".square");
 const keys = document.querySelectorAll(".key");
 const backspaceKey = document.querySelector("#backspace");
 const enterKey = document.querySelector("#enter");
+const letterColors = {};
 const rows = [
     document.querySelector("#row1"),
     document.querySelector("#row2"),
@@ -19,7 +20,6 @@ const rows = [
     document.querySelector("#row6")
 ];
 
-
 /*-------------------------------- Variables --------------------------------*/
 let currentRow = 0;
 let currentSquare = 0;
@@ -27,7 +27,6 @@ let currentRowSquares = getCurrentRowSquares();
 let correctWord = "";
 
 /*-------------------------------- Functions --------------------------------*/
-
 function getCurrentSquare() {
     return squares[currentSquare];
 }
@@ -86,8 +85,8 @@ function submitWord() {
             updateKeyboardColor(resultArray);
 
             if (resultArray.every(color => color === "green")) {
-                gameWon(); 
-            } else if (currentRow === rows.length - 1)  {
+                gameWon();
+            } else if (currentRow === rows.length - 1) {
                 gameLost();
             } else {
                 currentRow++;
@@ -129,35 +128,6 @@ function compareArrays() {
     });
 }
 
-function updateGridColor(resultArray) {
-    currentRowSquares.forEach((square, index) => {
-        if (resultArray[index] === "green") {
-            square.style.backgroundColor = "#548D4E";
-        } else if (resultArray[index] === "yellow") {
-            square.style.backgroundColor = "#B59F3A";
-        } else {
-            square.style.backgroundColor = "#3A3A3C";
-        }
-    })
-}
-
-function updateKeyboardColor(resultArray) {
-    const currentLettersArray = getCurrentRowLetters();
-    const keysArray = Array.from(keys);
-
-    currentLettersArray.forEach((letter, index) => {
-        const matchingKey = keysArray.find(key => key.getAttribute("data-letter") === letter);
-
-        if (resultArray[index] === "green") {
-            matchingKey.style.backgroundColor = "#548D4E";
-        } else if (resultArray[index] === "yellow") {
-            matchingKey.style.backgroundColor = "#B59F3A";
-        } else if (resultArray[index] === "grey") {
-            matchingKey.style.backgroundColor = "#3A3A3C";
-        }
-    })
-}
-
 function checkIfValidWord(checkWord) {
     const lowerCaseWord = checkWord.toLowerCase();
     return wordList.includes(lowerCaseWord);
@@ -175,6 +145,46 @@ function notEnoughLetters() {
     setTimeout(function () {
         notEnoughLtrs.classList.add("hideShortWordAlert");
     }, 3000);
+}
+
+function updateGridColor(resultArray) {
+    currentRowSquares.forEach((square, index) => {
+        if (resultArray[index] === "green") {
+            square.style.backgroundColor = "#548D4E";
+        } else if (resultArray[index] === "yellow") {
+            square.style.backgroundColor = "#B59F3A";
+        } else {
+            square.style.backgroundColor = "#3A3A3C";
+        }
+    })
+}
+
+function updateKeyboardColor(resultArray) {
+    const currentLettersArray = getCurrentRowLetters();
+    
+    currentLettersArray.forEach((letter, index) => {
+        if (resultArray[index] === "green") {
+            letterColors[letter] = "green";
+        } else if (resultArray[index] === "yellow" && letterColors[letter] !== "green") {
+            letterColors[letter] = "yellow";
+            console.log(resultArray[index], letterColors, letter)
+        } else if (resultArray[index] === "grey" && letterColors[letter] !== "green" && letterColors[letter] !== "yellow") {
+            letterColors[letter] = "grey";
+        }
+    });
+
+    keys.forEach(key => {
+        const letter = key.getAttribute("data-letter");
+        const letterColor = letterColors[letter];
+
+        if (letterColor === "green") {
+            key.style.backgroundColor = "#548D4E";
+        } else if (letterColor === "yellow") {
+            key.style.backgroundColor = "#B59F3A";
+        } else if (letterColor === "grey") {
+            key.style.backgroundColor = "#3A3A3C";
+        }
+    });
 }
 
 function gameWon() {
@@ -211,18 +221,6 @@ function resetCorrectWord() {
     correctWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
     correctWordElement.innerHTML = correctWord;
 }
-
-
-
-
-
-
-
-
-// function flipSquares() {
-
-// }
-
 
 /*----------------------------- Event Listeners -----------------------------*/
 document.addEventListener("DOMContentLoaded", function () {
