@@ -25,6 +25,7 @@ let currentSquare = 0;
 let currentRowSquares = getCurrentRowSquares();
 let correctWord = "";
 let letterColors = {};
+
 /*-------------------------------- Functions --------------------------------*/
 function getCurrentSquare() {
     return squares[currentSquare];
@@ -96,6 +97,7 @@ function submitWord() {
         } else {
             invalidWord();
         }
+
     } else if (Array.from(currentRowSquares).some(square => square.innerHTML === "")) {
         notEnoughLetters();
     }
@@ -170,10 +172,13 @@ function updateKeyboardColor(resultArray) {
     currentLettersArray.forEach((letter, index) => {
         if (resultArray[index] === "green") {
             letterColors[letter] = "green";
-        } else if (resultArray[index] === "yellow" && letterColors[letter] !== "green") {
+        } else if (resultArray[index] === "yellow"
+            && letterColors[letter] !== "green") {
             letterColors[letter] = "yellow";
             console.log(resultArray[index], letterColors, letter)
-        } else if (resultArray[index] === "grey" && letterColors[letter] !== "green" && letterColors[letter] !== "yellow") {
+        } else if (resultArray[index] === "grey"
+            && letterColors[letter] !== "green"
+            && letterColors[letter] !== "yellow") {
             letterColors[letter] = "grey";
         }
     });
@@ -215,12 +220,13 @@ function resetGame() {
     keys.forEach((key) => {
         key.style.backgroundColor = "#808384"
     })
-    
+
     currentRow = 0;
     currentSquare = 0;
     currentRowSquares = getCurrentRowSquares();
-    resetCorrectWord();
     letterColors = {};
+    resetCorrectWord();
+
 }
 
 function resetCorrectWord() {
