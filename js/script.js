@@ -40,6 +40,18 @@ function clickLetterButton(event) {
     updateCurrentSquare(letter);
 }
 
+function handleKeyPress(event) {
+    const letter = event.key.toUpperCase();
+    
+    if (letter.length === 1 && letter >= 'A' && letter <= 'Z') {
+        updateCurrentSquare(letter);
+    } else if (event.key === "Backspace") {
+        goBackSquare();
+    } else if (event.key === "Enter") {
+        submitWord();
+    }
+}
+
 function updateCurrentSquare(letter) {
     if (currentRowSquares[4].innerHTML !== "") {
         return;
@@ -244,8 +256,11 @@ keys.forEach(button => {
     button.addEventListener("click", clickLetterButton)
 })
 
+document.addEventListener("keydown", handleKeyPress);
+
 backspaceKey.addEventListener("click", goBackSquare);
 
 enterKey.addEventListener("click", submitWord);
 
 playAgainButton.addEventListener("click", resetGame);
+
